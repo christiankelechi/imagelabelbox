@@ -1,0 +1,5 @@
+
+API Endpoint	Method	Description
+/api/projects	GET	Fetches a list of annotation projects
+/api/image	GET	Fetches the image for annotation
+/api/save	POST	Saves annotations to the database

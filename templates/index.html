@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annotation Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        form {
+            text-align: center;
+            margin: 20px;
+        }
+        .image-container {
+            margin: 20px auto;
+            width: 500px;
+            text-align: center;
+            position: relative;
+        }
+        .annotation-input {
+            margin: 10px auto;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        input, button {
+            padding: 8px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        img {
+            pointer-events: none; /* Disable mouse interaction */
+            user-select: none; /* Prevent selection */
+            -webkit-user-drag: none; /* Prevent drag-and-drop */
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Annotation Tool</h1>
+
+    <!-- Project Selection -->
+    <form method="GET">
+        <select name="project" onchange="this.form.submit()">
+            <option value="">Select Project</option>
+            {% for project in projects %}
+                <option value="{{ project.id }}" {% if selected_project and selected_project.id == project.id %}selected{% endif %}>
+                    {{ project.name }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+
+    {% if selected_project %}
+        <h2>Images for Project: {{ selected_project.name }}</h2>
+        {% for image in images %}
+            <div class="image-container">
+                <h3>Image ID: {{ image.id }}</h3>
+              
+                <img src="{{ image.image.url }}" alt="Image {{ image.id }}" width="500"
+                     oncontextmenu="return false;" ondragstart="return false;">
+                
+               
+                <div class="annotation-input">
+                    <input type="text" id="label-{{ image.id }}" placeholder="Label">
+                    <input type="number" id="x-{{ image.id }}" placeholder="X (Position)">
+                    <input type="number" id="y-{{ image.id }}" placeholder="Y (Position)">
+                    <input type="number" id="width-{{ image.id }}" placeholder="Width">
+                    <input type="number" id="height-{{ image.id }}" placeholder="Height">
+                    <button onclick="saveAnnotation('{{ image.id }}')">Add Annotation</button>
+                </div>
+            </div>
+            <script>
+                function saveAnnotation(imageId) {
+                    const label = document.getElementById(`label-${imageId}`).value;
+                    const x = document.getElementById(`x-${imageId}`).value;
+                    const y = document.getElementById(`y-${imageId}`).value;
+                    const width = document.getElementById(`width-${imageId}`).value;
+                    const height = document.getElementById(`height-${imageId}`).value;
+
+                    fetch(`/save_annotations/${imageId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({
+                            label: label,
+                            x: parseFloat(x),
+                            y: parseFloat(y),
+                            width: parseFloat(width),
+                            height: parseFloat(height)
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message || 'Annotation saved successfully!');
+                        document.getElementById(`label-${imageId}`).value = '';
+                        document.getElementById(`x-${imageId}`).value = '';
+                        document.getElementById(`y-${imageId}`).value = '';
+                        document.getElementById(`width-${imageId}`).value = '';
+                        document.getElementById(`height-${imageId}`).value = '';
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Failed to save annotation.');
+                    });
+                }
+            </script>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>
