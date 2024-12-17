@@ -22,7 +22,6 @@ class AnnotationImage(models.Model):
 class Annotation(models.Model):
     image = models.ForeignKey(AnnotationImage, on_delete=models.CASCADE, related_name='annotations')
     image_label=models.TextField(null=True,blank=True)
-
     x = models.FloatField(default=0)
     y = models.FloatField(default=0)
     width = models.FloatField(default=0)
