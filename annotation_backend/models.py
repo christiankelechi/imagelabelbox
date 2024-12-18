@@ -13,7 +13,7 @@ class AnnotationProject(models.Model):
 
 class AnnotationImage(models.Model):
     project = models.ForeignKey(AnnotationProject, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to='images/')
+    image = models.FileField(upload_to='images')
 
     def __str__(self):
         return f"Image for Project: {self.project.name} with id {self.id}"
