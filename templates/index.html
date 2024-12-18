@@ -75,7 +75,7 @@
             <div class="image-container">
                 <h3>Image ID: {{ image.id }}</h3>
               
-                <img src="{{ image.image.url }}" alt="Image {{ image.id }}" width="500"
+                <img src="{{MEDIA_URL}}{{ image.image.url }}" alt="Image {{ image.id }}" width="500"
                      oncontextmenu="return false;" ondragstart="return false;">
                 
                
