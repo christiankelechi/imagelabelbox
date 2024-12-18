@@ -37,11 +37,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "cloudinary",
-    "cloudinary_storage",
     "annotation_backend",
     "annotation_frontend",
-
+    
 ]
 
 MIDDLEWARE = [
@@ -86,18 +84,23 @@ WSGI_APPLICATION = "imagelabelbox.wsgi.application"
 #         "NAME": BASE_DIR / "db.sqlite3",
 #     }
 # }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'imagelabelbox',
-        'USER': 'imagelabelboxuser',
-        'PASSWORD': 'password',
-        'HOST': '198.7.121.174',
-        'PORT': '',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'imagelabelboxdb',  # Database name
+#         'USER': 'imagelabelboxdb',  # Username
+#         'PASSWORD': 'N57q2cz7rRV8HkuoNsu1bRa2lo6PL0Pd',  # Password
+#         'HOST': 'dpg-cthc9bdumphs73fmo48g-a',  # Hostname
+#         'PORT': '5432',  # Default PostgreSQL port
+#     }
+# }
+import dj_database_url
 
+DATABASES = {
+    'default': dj_database_url.parse(
+        'postgresql://imagelabelboxdb:N57q2cz7rRV8HkuoNsu1bRa2lo6PL0Pd@dpg-cthc9bdumphs73fmo48g-a.oregon-postgres.render.com/imagelabelboxdb'
+    )
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -134,22 +137,22 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-STATIC_ROOT=os.path.join(BASE_DIR,'static')
+STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-MEDIA_URL='/opt/render/project/src/'
+MEDIA_URL='media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
-CLOUD_NAME="drlcmhrcg"
-CLOUDINARY_API_KEY="997498217494732"
-CLOUDINARY_API_SECRET="kNxzzNDDqvi2ppSHIpbWIU58_wA"
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': CLOUD_NAME,
-    'API_KEY': CLOUDINARY_API_KEY,
-    'API_SECRET': CLOUDINARY_API_SECRET,
-}
+# CLOUD_NAME="drlcmhrcg"
+# CLOUDINARY_API_KEY="997498217494732"
+# CLOUDINARY_API_SECRET="kNxzzNDDqvi2ppSHIpbWIU58_wA"
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': CLOUD_NAME,
+#     'API_KEY': CLOUDINARY_API_KEY,
+#     'API_SECRET': CLOUDINARY_API_SECRET,
+# }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

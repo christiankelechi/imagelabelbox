@@ -30,4 +30,4 @@ urlpatterns = [
     path('save_annotations/<int:image_id>/', views.save_annotations, name='save_annotations'),
 ]
 
-
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
