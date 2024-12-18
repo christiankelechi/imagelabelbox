@@ -24,7 +24,7 @@ from django.urls import path
 from annotation_frontend import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='project_list'),
+    path('', views.index, name='index'),
     path('save_annotations/<int:image_id>/', views.save_annotations, name='save_annotations'),
     # path('project/<int:project_id>/', views.project_detail, name='project_detail'),
     path('save_annotations/<int:image_id>/', views.save_annotations, name='save_annotations'),
