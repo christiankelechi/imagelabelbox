@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-x8=%u)kjldtd1s*5da+$7fjq_qx$)mo66%6prx6$65&1&*gujj"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["https://imagelabelbox.onrender.com","*"]
 
