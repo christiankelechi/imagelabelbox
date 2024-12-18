@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-x8=%u)kjldtd1s*5da+$7fjq_qx$)mo66%6prx6$65&1&*gujj"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["https://imagelabelbox.onrender.com","*"]
 
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "cloudinary",
     "cloudinary_storage",
     "annotation_backend",
     "annotation_frontend",
@@ -140,7 +141,7 @@ STATIC_ROOT=os.path.join(BASE_DIR,'static')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-MEDIA_URL='media/'
+MEDIA_URL='/opt/render/project/src/'
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 CLOUD_NAME="drlcmhrcg"
 CLOUDINARY_API_KEY="997498217494732"
