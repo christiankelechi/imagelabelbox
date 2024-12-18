@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from annotation_backend.models import AnnotationProject, AnnotationImage, Annotation
 import json
-
 # Home page to display all projects
 def index(request):
     projects = AnnotationProject.objects.all()
@@ -34,5 +33,5 @@ def save_annotations(request, image_id):
             width=float(data.get('width', 0)),
             height=float(data.get('height', 0))
         )
-        return JsonResponse({'status': 'success', 'message': 'Annotation added successfully to the database !'})
+        return JsonResponse({'status': 'success', 'message': f'Annotation added successfully to the database for image Id of {image_id} continue with the next Image Id'})
     return JsonResponse({'status': 'failed', 'message': 'Invalid request'}, status=400)
